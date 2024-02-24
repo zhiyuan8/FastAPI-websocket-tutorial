@@ -198,3 +198,4 @@ SQL queries
 - [fastapi-the-complete-course](https://github.com/codingwithroby/fastapi-the-complete-course)
 - [Python FastAPI vs Flask](https://www.turing.com/kb/fastapi-vs-flask-a-detailed-comparison)
 - [Learn everything about FastApi with Python](https://www.udemy.com/course/completefastapi/learn/lecture/28660302#overview)
+- [OpenAI, GPT, ChatGPT, DALL-E and FastAPI](https://www.udemy.com/course/the-complete-chatbot-bootcamp/learn/lecture/39165950#overview)
