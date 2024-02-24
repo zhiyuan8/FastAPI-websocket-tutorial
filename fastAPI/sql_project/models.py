@@ -1,7 +1,9 @@
 from database import Base
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
-
-
+"""
+Inheriting from Base in SQLAlchemy is crucial for several reasons, 
+particularly when defining your models like Users and Todos in an ORM (Object-Relational Mapping) approach. 
+"""
 class Users(Base):
     __tablename__ = 'users'
 
@@ -23,4 +25,4 @@ class Todos(Base):
     description = Column(String)
     priority = Column(Integer)
     complete = Column(Boolean, default=False)
-    owner_id = Column(Integer, ForeignKey("users.id"))
+    owner_id = Column(Integer, ForeignKey("users.id")) # describes the relationship between the Todos and Users table

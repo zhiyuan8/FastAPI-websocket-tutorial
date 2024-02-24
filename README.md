@@ -1,7 +1,7 @@
 # RestfulAPI
 A REST API (also called a RESTful API or RESTful web API) is an application programming interface (API) that conforms to the design principles of the representational state transfer (REST) architectural style.  
 - `Flask` is a Python-based lightweight Web Server Gateway Interface (WSGI) web application framework.
-- `FastAPI` is a modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints.
+- `FastAPI` is a modern, fast (high-performance), Asynchronous Server Gateway Interface (ASGI) web framework for building APIs with Python 3.7+ based on standard Python type hints.
     -  many world-renowned companies such as `Uber`, `Netflix` and `Microsoft` use FastAPI to build their applications.  
 
 ![img](fastAPI/imgs/fast-vs-flask.png)
@@ -103,6 +103,18 @@ used for data modeling, data parsing and has efficient error handling.
 
 
 ## JWT
+- JWT Header
+- JWT Payload
+- JWT Signature
+- JWT Web Token
+[jwt io](https://jwt.io/)
+
+A JWT is composed of three parts, separated by dots (.):
+- Header: Contains metadata about the type of token and the signing algorithm used.
+- Payload: Contains the claims (statements about an entity and additional data). One of these claims can be the exp claim, indicating the expiration time.
+- Signature: Used to verify that the sender of the JWT is who it says it is and to ensure that the message wasn't changed along the way.
+
+`python-jose`
 
 
 ## Project Structure

@@ -1,3 +1,15 @@
-sqlalchemy
+bcrypt
+cryptography
 fastapi
+psycopg2-binary
+PyMySQL
+python-jose
+python-multipart
+SQLAlchemy
 uvicorn
+passlib
+pytest
+httpx
+pytest-asyncio
+aiofiles
+jinja2
