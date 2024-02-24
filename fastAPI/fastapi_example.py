@@ -72,4 +72,4 @@ async def delete_book(book_id: int):
             return {"message": f"Book with id {book_id} has been deleted"}
     raise HTTPException(status_code=404, detail=f"Book with id {book_id} not found")
 
-# uvicorn first_api:app --port 8101 --reload
+# uvicorn fastapi_project_1:app --port 8101 --reload
