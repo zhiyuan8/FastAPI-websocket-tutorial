@@ -1,9 +1,18 @@
-from database import Base
+from .database import Base, SessionLocal
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 """
 Inheriting from Base in SQLAlchemy is crucial for several reasons, 
 particularly when defining your models like Users and Todos in an ORM (Object-Relational Mapping) approach. 
 """
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
 class Users(Base):
     __tablename__ = 'users'
 
