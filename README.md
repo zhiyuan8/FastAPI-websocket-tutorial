@@ -9,16 +9,16 @@ A REST API (also called a RESTful API or RESTful web API) is an application prog
 # FAST API
 HTTP request CRUD
 - get : read and retrieve data
+    - Query parameters, `@app.get("/books/")`
     - Path paramters, `@app.get("/books/author/{book_author}")`
 - post : create method and submit data
+    - `@app.post("/books/")`
 - put : update the entire resource, it is expected to provide all the relevant fields of the resource
+    - `@app.put("/books/{book_id}")`
 - patch : update part of the resource, Clients only need to send the fields that should be changed, without affecting other existing fields
+    - `@app.patch("/books/{book_id}")`
 - delete : delete the resource
-
-request method
-- trace
-- connect
-- options
+    - `@app.delete("/books/{book_id}")`
 
 status code
 - 1xx : Informational responses, request received and continuing process
@@ -35,20 +35,11 @@ json web token structure
 - payload
 - signature
 
-# Preperation
-Install environment:
-```
-python -m pip install -r requirement.txt
-```
+doc format
+- tags
+- summary
+- description
 
-Optional, if you want to work with SQLite:
-```
-sudo apt update
-sudo apt install sqlite3
-```
-Then in terminal, type `sqlite3` to enter the SQLite shell and create tables.
-```
-```
 
 ## FastAPI Practices
 ### fastapi
@@ -99,8 +90,36 @@ used for data modeling, data parsing and has efficient error handling.
 
 ### router
 
+### cookie
+cookie : store information on the browser for response, and use for request in the future
+
+### form_data
+form data : avoid writing pydantic model, use `Form` from `fastapi` to parse form data
 
 
+### CORS
+cross-origin resource sharing, it specify the origins that are allowed to make requests to the API.
+
+```
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # specify the origins that are allowed to make requests to the API
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+### File handling
+File: used to handle file uploads
+UploadFile : used to handle file uploads
+FileResponse : used to return files as responses
+app.mount() : mount the static files
+StaticFiles : used to serve static files such as images, CSS, and JavaScript files
+
+## logging
+- `logging` module
 
 ## JWT
 - JWT Header
@@ -117,16 +136,34 @@ A JWT is composed of three parts, separated by dots (.):
 `python-jose`
 
 
+
+## testing
+- unit testing
+- integration testing
+`pytest`
+`fixture`
+
 ## Project Structure
 - sql_project
     - main.py : 
 
-# Reference
-- [fastapi-the-complete-course](https://github.com/codingwithroby/fastapi-the-complete-course)
-- [Python FastAPI vs Flask](https://www.turing.com/kb/fastapi-vs-flask-a-detailed-comparison)
+# Preperation
+Install environment:
+```
+python -m pip install -r requirement.txt
+```
 
+Optional, if you want to work with SQLite:
+```
+sudo apt update
+sudo apt install sqlite3
+```
+
+
+# FAST API concurrency
 
 # Database
+DBMS : Database Management System
 - In-memory cache
     - Memcached
     - Redis
@@ -155,3 +192,9 @@ SQL queries
 
 - foreign key
 - primary key
+
+
+# Reference
+- [fastapi-the-complete-course](https://github.com/codingwithroby/fastapi-the-complete-course)
+- [Python FastAPI vs Flask](https://www.turing.com/kb/fastapi-vs-flask-a-detailed-comparison)
+- [Learn everything about FastApi with Python](https://www.udemy.com/course/completefastapi/learn/lecture/28660302#overview)
