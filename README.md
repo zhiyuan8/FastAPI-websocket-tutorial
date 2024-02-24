@@ -1,9 +1,10 @@
 # RestfulAPI
 A REST API (also called a RESTful API or RESTful web API) is an application programming interface (API) that conforms to the design principles of the representational state transfer (REST) architectural style.  
-`Flask` is a Python-based lightweight Web Server Gateway Interface (WSGI) web application framework.
+- `Flask` is a Python-based lightweight Web Server Gateway Interface (WSGI) web application framework.
+- `FastAPI` is a modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints.
+    -  many world-renowned companies such as `Uber`, `Netflix` and `Microsoft` use FastAPI to build their applications.  
 
-
-
+![img](fastAPI/imgs/fast-vs-flask.png)
 
 # FAST API
 HTTP request CRUD
@@ -113,11 +114,15 @@ used for data modeling, data parsing and has efficient error handling.
 - [Python FastAPI vs Flask](https://www.turing.com/kb/fastapi-vs-flask-a-detailed-comparison)
 
 
-# database
-- SQLite : SQLite3 strives to provide local data storage for individual applications and devices.
-    - runs in-memory
-- MySQL & PostgreSQL are production databases, and SQLite is a development database.
-    - run on their own server and port
+# Database
+- In-memory cache
+    - Memcached
+    - Redis
+- in-memory database
+    - SQLite : SQLite3 strives to provide local data storage for individual applications and devices. It runs in-memory
+- disk-based databases
+    - MySQL & PostgreSQL are production databases, and SQLite is a development database.
+        - run on their own server and port
 
 SQL queries
 - `CREATE TABLE` : create a new table
@@ -131,3 +136,10 @@ SQL queries
 - `JOIN` : join tables
 - `GROUP BY` : group records
 - `SET` : update records
+
+- one-to-many relationship
+- many-to-many relationship
+- one-to-one relationship
+
+- foreign key
+- primary key
