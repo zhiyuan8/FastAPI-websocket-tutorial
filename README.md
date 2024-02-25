@@ -6,9 +6,7 @@ A REST API (also called a RESTful API or RESTful web API) is an application prog
 
 ![img](fastAPI-sqlite/imgs/fast-vs-flask.png)
 
-# 1. FAST API
-
-## BASICS
+# FAST API
 HTTP request CRUD
 - **GET**: Read and retrieve data. Supports query and path parameters.
     - Query parameters, `@app.get("/books/")`
@@ -130,7 +128,16 @@ user_dependency = Annotated[dict, Depends(get_current_user)]
 async def create_item(item: ItemCreate, db: db_dependency, user: user_dependency):
     ...
 ```
+## Router
+Router is a class that includes a set of path operations, and can include sub-routers.
+```
+router = APIRouter(
+    prefix='/auth',
+    tags=['auth']
+)
+@router.get("/todo", status_code=status.HTTP_200_OK)
 
+```
 ## Error Handling and Logging
 - **HTTPException**: Handle errors gracefully and return meaningful error responses.
 ```
@@ -186,9 +193,6 @@ async def add_process_time_header(request: Request, call_next):
     return response
 ```
 
-
-
-
 # FAST API concurrency
 Modern versions of Python have support for "asynchronous code" using something called "coroutines", with async and await syntax.  
 
@@ -198,43 +202,10 @@ Let's see that phrase by parts in the sections below:
 - Coroutines
 
 
-
-# Database
-DBMS : Database Management System
-- In-memory cache
-    - Memcached
-    - Redis
-- in-memory database
-    - SQLite : SQLite3 strives to provide local data storage for individual applications and devices. It runs in-memory
-- disk-based databases
-    - MySQL & PostgreSQL are production databases, and SQLite is a development database.
-        - run on their own server and port
-
-SQL queries
-- `CREATE TABLE` : create a new table
-- `INSERT INTO` : insert new records
-- `SELECT` : select records
-- `UPDATE` : update records
-- `DELETE` : delete records
-- `WHERE` : filter records
-- `ORDER BY` : sort records
-- `LIMIT` : limit the number of records
-- `JOIN` : join tables
-- `GROUP BY` : group records
-- `SET` : update records
-
-- one-to-many relationship
-- many-to-many relationship
-- one-to-one relationship
-
-- foreign key
-- primary key
-
-
 # Reference
 - [FastAPI Official Doc](https://fastapi.tiangolo.com/)
 - [Create a streaming AI assistant with ChatGPT, FastAPI, WebSockets and React](https://dev.to/dpills/create-a-streaming-ai-assistant-with-chatgpt-fastapi-websockets-and-react-3ehf)
-- [FastAPI from scratch](https://www.udemy.com/course/completefastapi/learn/lecture/32788640#overview)
+- [Complete FastAPI masterclass from scratch](https://www.udemy.com/course/completefastapi/learn/lecture/32788640#overview)
 - [fastapi-the-complete-course](https://github.com/codingwithroby/fastapi-the-complete-course)
 - [Python FastAPI vs Flask](https://www.turing.com/kb/fastapi-vs-flask-a-detailed-comparison)
 - [Learn everything about FastApi with Python](https://www.udemy.com/course/completefastapi/learn/lecture/28660302#overview)
