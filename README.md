@@ -64,15 +64,6 @@ uvicorn main:app --reload --port 8081
 ```
 background_tasks.add_task(<task_function>, <arguments>)
 ```
-- **WebSocket Support**: Real-time communication.
-```
-@app.websocket("/ws/")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-    while True:
-        data = await websocket.receive_text()
-        await websocket.send_text(f"Message text was: {data}")
-```
 - **Session and Cookie Support**: Store and manage user session data.
     - cookie : store information on the browser for response, and use for request in the future
 
@@ -200,14 +191,41 @@ async def add_process_time_header(request: Request, call_next):
     return response
 ```
 
-# FAST API concurrency
+# FASTAPI concurrency
 Modern versions of Python have support for "asynchronous code" using something called "coroutines", with async and await syntax.  
+- `async` and `await`
+    - An async def function defines a coroutine that can perform asynchronous operations.
+    - The await expression is used to pause the execution of the coroutine until the awaited task completes, allowing other tasks to run.
+- Coroutines :  includes async functions but can also refer to objects returned by functions defined with async def.
 
-Let's see that phrase by parts in the sections below:  
-- Asynchronous Code
-- async and await
-- Coroutines
+Example with websockets
+```
+@app.websocket("/ws/")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        data = await websocket.receive_text()
+        await websocket.send_text(f"Message text was: {data}")
+```
+Example with `StreamingResponse`
+- Response Streaming
+```
+def generate_data(): # no need for async
+    for i in range(10):  # Simulate a data stream.
+        yield f"data: {i}\n\n"
+        time.sleep(1)
 
+@app.get("/stream/")
+def stream_data():
+    return StreamingResponse(generate_data(), media_type="text/plain")
+```
+- Request Streaming
+```
+@app.post("/upload/") # no need for async
+async def upload_data(request: Request):
+    async for chunk in request.stream():
+        process_chunk(chunk)  # Process the chunk of data.
+```
 
 # Reference
 - [FastAPI Official Doc](https://fastapi.tiangolo.com/)
