@@ -6,7 +6,14 @@ A REST API (also called a RESTful API or RESTful web API) is an application prog
 
 ![img](fastAPI-sqlite/imgs/fast-vs-flask.png)
 
-# FAST API
+# FAST API Example
+See code at `fastapi-chatbot/`
+
+
+[![Video Title](fastapi-chatbot/streaming-example.png)](https://vimeo.com/916362221?share=copy)
+
+
+# FAST API Explaination
 HTTP request CRUD
 - **GET**: Read and retrieve data. Supports query and path parameters.
     - Query parameters, `@app.get("/books/")`

@@ -2,12 +2,13 @@
 
 <div class="container mt-5">
   <h3>
-    Add input to chat with personal chatbot
+    Start Conversation
   </h3>
-  <form action="/" method="POST">
+  <form id="chatForm" action="/" method="POST">
     <div>
       <textarea class="form-control" placeholder="Add input here" name="user_input" rows="3"></textarea>
       <button class="btn btn-primary mt-1" type="submit">Send</button>
+      <button type="button" id="toggleWsButton" class="btn btn-secondary mt-1">Switch to WebSocket</button>
     </div>
   </form>
 
@@ -16,7 +17,7 @@
       <div class="card-header">
         Chat History:
       </div>
-      <div class="card-body">
+      <div class="card-body" id="chatHistory">
         {% for response in chat_responses %}
         <div>
           - {{response}}
@@ -25,5 +26,60 @@
       </div>
     </div>
   </div>
-
 </div>
+
+<script>
+  let useWebSocket = false;
+  const wsButton = document.getElementById('toggleWsButton');
+  const chatForm = document.getElementById('chatForm');
+  const chatHistory = document.getElementById('chatHistory');
+  let ws;
+
+  function appendBotMessage(messageText) {
+    let lastMessage = chatHistory.lastElementChild;
+    // Check if the last message is from the bot and can be appended to
+    if (lastMessage && lastMessage.classList.contains('bot-message')) {
+      // Append to the existing message for streaming outputs
+      lastMessage.textContent += messageText;
+    } else {
+      // Create a new message div for the bot response
+      const message = document.createElement('div');
+      message.textContent = '- ' + messageText;
+      message.classList.add('bot-message'); // Mark this message as from the bot
+      chatHistory.appendChild(message);
+    }
+  }
+
+  function addUserMessage(messageText) {
+    // Always add user messages as new entries
+    const message = document.createElement('div');
+    message.textContent = '- ' + messageText;
+    message.classList.add('user-message'); // Mark this message as from the user
+    chatHistory.appendChild(message);
+  }
+
+  wsButton.onclick = function() {
+    useWebSocket = !useWebSocket;
+    wsButton.textContent = useWebSocket ? 'Switch to HTTP' : 'Switch to WebSocket';
+    if (useWebSocket) {
+      // Initialize WebSocket connection
+      ws = new WebSocket('ws://' + window.location.host + '/ws');
+      ws.onmessage = function(event) {
+        // Append incoming bot message
+        appendBotMessage(event.data);
+      };
+      // Prevent form from submitting via HTTP when WebSocket is active
+      chatForm.onsubmit = function(e) {
+        e.preventDefault();
+        const user_input = chatForm.querySelector('[name="user_input"]').value;
+        addUserMessage(user_input); // Display user message immediately as a new entry
+        ws.send(user_input); // Send user message through WebSocket
+      };
+    } else {
+      // Reset to default form submission
+      chatForm.onsubmit = null;
+    }
+  };
+</script>
+
+
