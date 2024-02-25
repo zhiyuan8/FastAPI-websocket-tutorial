@@ -1,6 +1,7 @@
 bcrypt
 cryptography
 fastapi
+uvicorn[standard]
 psycopg2-binary
 PyMySQL
 python-jose
@@ -13,3 +14,8 @@ httpx
 pytest-asyncio
 aiofiles
 jinja2
+uvicorn
+Jinja2
+mangum
+openai
+python-multipart
