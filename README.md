@@ -4,9 +4,10 @@ A REST API (also called a RESTful API or RESTful web API) is an application prog
 - `FastAPI` is a modern, fast (high-performance), Asynchronous Server Gateway Interface (ASGI) web framework for building APIs with Python 3.7+ based on standard Python type hints.  
     -  many world-renowned companies such as `Uber`, `Netflix` and `Microsoft` use FastAPI to build their applications.  
 
-![img](fastAPI/imgs/fast-vs-flask.png)
+![img](fastAPI-sqlite/imgs/fast-vs-flask.png)
 
-# FAST API
+# 1. FAST API
+
 ## BASICS
 HTTP request CRUD
 - **GET**: Read and retrieve data. Supports query and path parameters.
@@ -40,9 +41,8 @@ uvicorn main:app --reload --port 8081
     ```
 
 - `Query Parameters` : request parameters that have been attached after a “?”
-    - Query Parameters have `name=value` pairs
+    - Query Parameters have `name=value` pairs. In below example, 'author%20four' is path parameter, 'category=science' is query parameter
     ```
-    request: # 'author%20four' is path parameter, 'category=science' is query parameter
     URL : 127.0.0.1:8000/books/author%20four/?category=science
     code:
     @app.get(“/books/{book_author}/”)
@@ -77,33 +77,37 @@ async def websocket_endpoint(websocket: WebSocket):
         - Field is a function from Pydantic used to provide validations and metadata for model attributes.
         - `min_length`, `max_length`, `gt`, and `lt`
         - `json_schema_extra`, which is used for documentation purposes
-    ```
-    class Book(BaseModel):
-        title: str
-        description: str
-        rating: int
-        class Config:
-            json_schema_extra = {
-                "example": {
-                    "title": "The Catcher in the Rye",
-                    "description": "A story
-                    "rating": 5
-                }
+
+```
+class Book(BaseModel):
+    title: str
+    description: str
+    rating: int
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "title": "The Catcher in the Rye",
+                "description": "A story
+                "rating": 5
             }
-    ```
+        }
+```
+
 - **Serialization**: Convert models to dictionaries for JSON responses.
     - `.model_dump()` to convert the model to a dictionary
-    ```
-    async def create_book(book: Book):
-        new_book = Book(**book.model_dump())
-    ```
+
+```
+async def create_book(book: Book):
+    new_book = Book(**book.model_dump())
+```
+
 - **form_data** : avoid writing pydantic model, use `Form` from `fastapi` to parse form data
-    ```
-    from fastapi import Form
-    @app.post("/login/")
-    async def login(username: str = Form(...), password: str = Form(...)):
-        return {"username": username}
-    ```
+```
+from fastapi import Form
+@app.post("/login/")
+async def login(username: str = Form(...), password: str = Form(...)):
+    return {"username": username}
+```
 
 
 ## Security
@@ -117,9 +121,14 @@ FastAPI provides built-in support for security and authentication, including:
     - `python-jose` : a library for JWT
 
 - **Dependency Injection**: Reuse shared logic across the application, such as database connections and authentication.
+    -  particularly useful for when you need to access the database or current user information to create or modify resources.
 ```
 db_dependency = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[dict, Depends(get_current_user)]
+
+@router.post('/items/', status_code=status.HTTP_201_CREATED)
+async def create_item(item: ItemCreate, db: db_dependency, user: user_dependency):
+    ...
 ```
 
 ## Error Handling and Logging
